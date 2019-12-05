@@ -1,0 +1,19 @@
+version: "3.6"
+services:
+  sut:
+    build:
+      context: .
+      dockerfile: dockerHubAutotests/Dockerfile_Tests
+    volumes:
+      - .:/projectroot
+    working_dir: /projectroot
+    environment:
+      - SOURCE_BRANCH
+      - SOURCE_COMMIT
+      - COMMIT_MSG
+      - DOCKER_REPO
+      - DOCKERFILE_PATH
+      - DOCKER_TAG
+      - IMAGE_NAME
+    entrypoint: ""
+    command: /projectroot/dockerHubAutotests/tests.sh
