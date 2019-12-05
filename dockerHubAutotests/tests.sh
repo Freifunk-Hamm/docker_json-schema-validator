@@ -8,6 +8,11 @@ env
 echo "Trivy version"
 trivy -v
 
+echo "Docker images:"
+docker image list
+
+echo "Temp. docker image name is: ${DOCKER_REPO}:${DOCKER_TAG}"
+
 echo "Generate vulnerability report..."
 trivy --no-progress --format json --output /projectroot/report.json "${DOCKER_REPO}:${DOCKER_TAG}"
 echo "Show vulnerabilities summary: "
