@@ -1,7 +1,7 @@
 FROM python:3.6.9-alpine
 LABEL maintainer="christian.weiss@ffhamm.de"
 
-RUN pip install 'jsonschema==3.0.2'
+RUN pip install 'jsonschema==3.1.0'
 
 WORKDIR /data
 ENTRYPOINT ["jsonschema"]
