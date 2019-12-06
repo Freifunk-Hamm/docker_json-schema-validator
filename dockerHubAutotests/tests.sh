@@ -14,6 +14,9 @@ echo "Export docker image as: this.tar"
 docker save this:latest -o this.tar
 ls -al this.tar
 
+echo "Clean-up trivy cache (to get rid of old artifacts from previous runs):"
+trivy --clear-cache
+
 DOCKER_REPO_NO_REG=$(echo $IMAGE_NAME | awk -F"/" '{print $2 "/" $3}')
 echo "Temp. docker image name is: ${DOCKER_REPO_NO_REG}"
 echo "Temp. docker image name is: this:latest"
@@ -22,7 +25,7 @@ echo "Official docker image name is: ${DOCKER_REPO}:${DOCKER_TAG}"
 echo "Generate vulnerability report..."
 trivy -d --no-progress --format json --output /projectroot/report.json this.tar
 echo "Show vulnerabilities summary: "
-trivy -d --quiet this:latest
+trivy -d --quiet this.tar
 
 echo "Current directory contents:"
 ls -al /projectroot
