@@ -23,9 +23,9 @@ echo "Temp. docker image name is: this:latest"
 echo "Official docker image name is: ${DOCKER_REPO}:${DOCKER_TAG}"
 
 echo "Generate vulnerability report..."
-trivy -d --no-progress --format json --output /projectroot/report.json this.tar
+trivy -d --no-progress --format json --output /projectroot/report.json --input this.tar
 echo "Show vulnerabilities summary: "
-trivy -d --quiet this.tar
+trivy -d --quiet --input this.tar
 
 echo "Current directory contents:"
 ls -al /projectroot
@@ -39,7 +39,7 @@ curl -X POST -H "Content-Type: application/json" --silent --data-binary "@/proje
 echo "done."
 
 # fails if vulnerabilities of a notable severity are detected:
-trivy -d --quiet --severity CRITICAL,HIGH --exit-code 1 this.tar > /dev/null 2>&1
+trivy -d --quiet --severity CRITICAL,HIGH --exit-code 1 --input this.tar > /dev/null 2>&1
 exitCode=$?
 if [ $exitCode -gt 0 ]; then
   echo "Tests failed! Notable vulnerabilities are detected!"
