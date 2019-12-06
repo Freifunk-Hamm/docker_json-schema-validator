@@ -10,6 +10,9 @@ trivy -v
 
 echo "Docker images:"
 docker image list
+echo "Export docker image as: this.tar"
+docker save this:latest -o this.tar
+ls -al this.tar
 
 DOCKER_REPO_NO_REG=$(echo $IMAGE_NAME | awk -F"/" '{print $2 "/" $3}')
 echo "Temp. docker image name is: ${DOCKER_REPO_NO_REG}"
@@ -17,7 +20,7 @@ echo "Temp. docker image name is: this:latest"
 echo "Official docker image name is: ${DOCKER_REPO}:${DOCKER_TAG}"
 
 echo "Generate vulnerability report..."
-trivy -d --no-progress --format json --output /projectroot/report.json this:latest
+trivy -d --no-progress --format json --output /projectroot/report.json this.tar
 echo "Show vulnerabilities summary: "
 trivy -d --quiet this:latest
 
@@ -33,7 +36,7 @@ curl -X POST -H "Content-Type: application/json" --silent --data-binary "@/proje
 echo "done."
 
 # fails if vulnerabilities of a notable severity are detected:
-trivy -d --quiet --severity CRITICAL,HIGH --exit-code 1 this:latest > /dev/null 2>&1
+trivy -d --quiet --severity CRITICAL,HIGH --exit-code 1 this.tar > /dev/null 2>&1
 exitCode=$?
 if [ $exitCode -gt 0 ]; then
   echo "Tests failed! Notable vulnerabilities are detected!"
