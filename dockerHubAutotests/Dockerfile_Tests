@@ -1,2 +1,2 @@
-FROM aquasec/trivy:0.14.0
+FROM aquasec/trivy:0.9.1
 RUN apk --no-cache add curl docker
