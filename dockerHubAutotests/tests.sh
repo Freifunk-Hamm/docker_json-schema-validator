@@ -23,9 +23,9 @@ echo "Temp. docker image name is: this:latest"
 echo "Official docker image name is: ${DOCKER_REPO}:${DOCKER_TAG}"
 
 echo "Generate vulnerability report..."
-trivy -d --no-progress --format json --output /projectroot/report.json --input this.tar
+trivy --no-progress --format json --output /projectroot/report.json --input this.tar
 echo "Show vulnerabilities summary: "
-trivy -d --quiet --input this.tar
+trivy --quiet --input this.tar
 
 echo "Current directory contents:"
 ls -al /projectroot
